@@ -1,2 +1,16 @@
+const mongoose=require('mongoose');
 
-{ fname: { mandatory}, lname: {mandatory}, title: {mandatory, enum[Mr, Mrs, Miss]}, email: {mandatory, valid email, unique}, password: {mandatory} }
+const authorModel= new mongoose.Schema(
+ { 
+    fname: { 
+        type:String,
+        required:true,
+    },
+    lname: {mandatory},
+     title:
+      {mandatory,
+     enum[Mr, Mrs, Miss]},
+     email: {mandatory, valid email, unique},
+      password: {mandatory}
+ }
+)
