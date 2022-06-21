@@ -6,11 +6,24 @@ const authorModel= new mongoose.Schema(
         type:String,
         required:true,
     },
-    lname: {mandatory},
-     title:
-      {mandatory,
-     enum[Mr, Mrs, Miss]},
-     email: {mandatory, valid email, unique},
-      password: {mandatory}
+    lname: {
+        type:String,
+        required:true,
+    },
+     title:{
+        required:true,
+        enum:[Mr, Mrs, Miss]
+    },
+     email: {
+        type:String,
+        required:true,
+        validate: [validateEmail, 'please fill a validate email address'],
+        lowercase:true,
+        unique:true
+    },
+      password: {
+        required:true
+      }
  }
 )
+module.exports = mongoose.model('Author', authorSchema)
