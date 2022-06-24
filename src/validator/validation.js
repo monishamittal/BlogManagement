@@ -15,12 +15,14 @@ const validateAuthorFields = async function (req, res, next) {
       let msg = "";
 
       if (!fname) msg = "First Name is required";
+      else if (/\d+/.test(fname) && fname !== "string")
+        msg = "Numbers are not allowed in first name";
       else if (fname.trim().length == 0) msg = "What's your first name?";
-      else if (/\d+/.test(fname)) msg = "Numbers are not allowed in first name";
 
       if (!lname) msg = "Last Name is required";
+      else if (/\d+/.test(lname) && lname !== "string")
+        msg = "Numbers are not allowed in last name";
       else if (lname.trim().length == 0) msg = "What's your last name?";
-      else if (/\d+/.test(lname)) msg = "Numbers are not allowed in last name";
 
       let data = ["Mr", "Mrs", "Miss"];
       if (!title) msg = "Title is required";
@@ -45,7 +47,7 @@ const validateAuthorFields = async function (req, res, next) {
         .find()
         .select({ email: 1, _id: 0 });
       const emailInData = emailId.map((ele) => ele.email);
-      if (emailInData.includes(email)) msg = "Please Enter Valid Email Id";
+      if (emailInData.includes(email)) msg = "Email id is already exist";
 
       if (msg) {
         return res.status(400).send({ status: false, msg: msg });
@@ -75,6 +77,9 @@ const validateBlogFields = async function (req, res, next) {
       else if (body.trim().length == 0) msg = "Body is empty. Please enter";
 
       if (!authorId) msg = "Author Id is required";
+      else if (authorId.trim().length == 0)
+        msg = "Author Id is empty. Please enter";
+
       if (!tags) msg = "Tags are required";
       else if (tags.length == 0) msg = "Tags are empty. Please enter";
 
@@ -113,7 +118,7 @@ const validateUpdateBlogFields = async function (req, res, next) {
 
     if (!tags) msg = "Tags are required";
     else if (tags.length == 0) msg = "Tags are empty. Please enter";
-    
+
     if (!subcategory) msg = "subategory is required";
     else if (subcategory.length == 0)
       msg = "Subcategory are empty. Please enter";

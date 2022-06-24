@@ -42,9 +42,13 @@ const getBlogs = async function (req, res) {
       params.subcategory = { $all: newSubcategory };
     }
 
-    console.log(params);
+    if (!authorId && !category && !tags && !subcategory) {
+      let blogs = await blogModel.find(params).populate("authorId");
+
+      return res.status(200).send({ status: true, data: blogs });
+    }
+
     const blogs = await blogModel.find(params);
-    console.log(blogs);
     if (blogs.length === 0) {
       return res.status(404).send({ status: false, msg: "No blogs found" });
     }
@@ -104,6 +108,7 @@ const deleteBlog = async function (req, res) {
 // ....................................... Delete blogs by query params  ..........................................//
 const deleteBlogByQuery = async function (req, res) {
   try {
+    
     const { authorId, category, tags, subcategory, isPublished } = req.query;
 
     // Set params based on query params value

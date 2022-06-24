@@ -22,12 +22,7 @@ router.post(
 );
 
 //.....................Handling HTTP request for getting blogs(Get API)...................//
-router.get(
-  "/blogs",
-  validator.validateQueryParams,
-  auth.Authentication,
-  blogController.getBlogs
-);
+router.get("/blogs", auth.Authentication, blogController.getBlogs);
 
 //.....................Handling HTTP request for updating blogs(Put API)...................//
 router.put(
