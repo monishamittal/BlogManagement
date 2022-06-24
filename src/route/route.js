@@ -1,36 +1,63 @@
+//....................................Importing the modules .................................//
 const express = require("express");
 const router = express.Router();
 const authorController = require("../controller/authorController");
 const blogController = require("../controller/blogController");
-const blogMiddleware = require("../middleware/blogMiddleware");
-const authorMiddleware = require("../middleware/authorMiddleware");
+const auth = require("../middleware/auth");
+const validator = require("../validator/validation");
 
+//.....................Handling HTTP request for creating authors(Post API).................//
 router.post(
   "/authors",
-  authorMiddleware.validateAuthorFields,
+  validator.validateAuthorFields,
   authorController.createAuthor
 );
 
+//.....................Handling HTTP request for creating blogs(Post API)...................//
 router.post(
   "/blogs",
-  blogMiddleware.validateBlogFields,
+  validator.validateBlogFields,
+  auth.Authentication,
   blogController.createBlog
 );
 
-router.get("/blogs", blogController.getBlogs);
+//.....................Handling HTTP request for getting blogs(Get API)...................//
+router.get(
+  "/blogs",
+  validator.validateQueryParams,
+  auth.Authentication,
+  blogController.getBlogs
+);
 
+//.....................Handling HTTP request for updating blogs(Put API)...................//
 router.put(
   "/blogs/:blogId",
-  blogMiddleware.validateUpdateBlogFields,
+  validator.validateUpdateBlogFields,
+  auth.Authentication,
+  auth.Authorisation,
   blogController.updateBlog
 );
 
+//.....................Handling HTTP request for deleting blogs by path params(Delete API)...................//
 router.delete(
   "/blogs/:blogId",
-  blogMiddleware.validateDeleteBlogParam,
+  auth.Authentication,
+  auth.Authorisation,
+  validator.validateDeleteBlogParam,
   blogController.deleteBlog
 );
 
-router.delete("/blogs", blogController.deleteBlogByQuery);
+//.....................Handling HTTP request for deleting blogs by query params(Delete API)...................//
+router.delete(
+  "/blogs",
+  validator.validateQueryParams,
+  auth.Authentication,
+  auth.AuthorisationForQuery,
+  blogController.deleteBlogByQuery
+);
 
+//.....................Handling HTTP request for login author (Post API)...................//
+router.post("/login", authorController.loginAuthor);
+
+//.....................Making router public...................//
 module.exports = router;

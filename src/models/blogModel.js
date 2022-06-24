@@ -1,6 +1,11 @@
+
+//.................................... Import Models for using in this module ....................//
 const mongoose = require("mongoose");
+
+//..................................used for reference authorModel ...................//
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
+//................................. Create Schema .........................//
 const blogSchema = new mongoose.Schema(
   {
     title: { type: String, required: true },
@@ -32,4 +37,5 @@ const blogSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+//........................................Export Schema..................................//
 module.exports = mongoose.model("Blog", blogSchema);
