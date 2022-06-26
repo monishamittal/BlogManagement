@@ -1,19 +1,18 @@
 //.................................... Import Models for using in this module ....................//
 const authorModel = require("../models/authorModel");
 const blogModel = require("../models/blogModel");
+const ObjectId = require("mongodb").ObjectId;
 
 // ....................................... Creating blogs .......................................//
 const createBlog = async function (req, res) {
   try {
     const data = req.body;
-
     // Find and check author id exists or not
     const author = await authorModel.findById(data.authorId);
     if (!author) return res.status(400).send("Author id is not valid");
 
     // create a new blog
     const blog = await blogModel.create(data);
-
     return res.status(201).send({ status: true, data: blog });
   } catch (err) {
     return res.status(500).send({ status: false, msg: err.message });
@@ -24,12 +23,14 @@ const createBlog = async function (req, res) {
 const getBlogs = async function (req, res) {
   try {
     const { authorId, category, tags, subcategory } = req.query;
-
     // Get a blog those aren't deleted and are published
     const params = { isPublished: true, isDeleted: false };
 
     // Set params based on query params value
     if (authorId) params.authorId = authorId;
+    if (!ObjectId.isValid(authorId)) {
+      return res.status(400).send({ status: false, msg: "Invalid Object id" });
+    }
     if (category) params.category = category;
 
     if (tags) {
@@ -64,7 +65,8 @@ const getBlogs = async function (req, res) {
 // .......................................  Update blogs  ..........................................//
 const updateBlog = async function (req, res) {
   try {
-    const { blogId } = req.params;
+    const blogId = req.params.blogId;
+
     const { title, body, tags, subcategory } = req.body;
 
     //Updates a blog by changing the its title, body, adding tags, adding a subcategory and also by changing isPublished true with date.
@@ -108,7 +110,6 @@ const deleteBlog = async function (req, res) {
 // ....................................... Delete blogs by query params  ..........................................//
 const deleteBlogByQuery = async function (req, res) {
   try {
-    
     const { authorId, category, tags, subcategory, isPublished } = req.query;
 
     // Set params based on query params value

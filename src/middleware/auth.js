@@ -1,6 +1,7 @@
 //.................................... Import Model and jwt for using in this module ....................//
 const jwt = require("jsonwebtoken");
 const blogModel = require("../models/blogModel");
+const ObjectId = require("mongodb").ObjectId;
 
 //..................................... Authentication ......................................//
 const Authentication = async function (req, res, next) {
@@ -22,7 +23,12 @@ const Authorisation = async function (req, res, next) {
   try {
     let token = req.headers["x-api-key"] || req.headers["x-Api-key"];
     const decodedtoken = jwt.verify(token, "FunctionUp - Project-1");
+
+    // Return error if blog id is not valid
     let blogId = req.params.blogId;
+    if (!ObjectId.isValid(blogId)) {
+      return res.status(400).send({ status: false, msg: "Invalid Object id" });
+    }
     let author = await blogModel
       .findById(blogId)
       .select({ authorId: 1, _id: 0 });
@@ -52,7 +58,12 @@ const AuthorisationForQuery = async function (req, res, next) {
   try {
     let token = req.headers["x-api-key"] || req.headers["x-Api-key"];
     const decodedtoken = jwt.verify(token, "FunctionUp - Project-1");
+
+    // Return error if author id is not valid
     let authorId = req.query.authorId;
+    if (!ObjectId.isValid(authorId)) {
+      return res.status(400).send({ status: false, msg: "Invalid Object id" });
+    }
     let userLoggedIn = decodedtoken.authorId;
 
     if (authorId != userLoggedIn) {

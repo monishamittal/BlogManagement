@@ -1,6 +1,7 @@
 //.................................... Import Models for using in this module ....................//
 const blogModel = require("../models/blogModel");
 const authorModel = require("../models/authorModel");
+const ObjectId = require("mongodb").ObjectId;
 
 // .......................................Validations for creating authers.......................................//
 const validateAuthorFields = async function (req, res, next) {
@@ -125,7 +126,12 @@ const validateUpdateBlogFields = async function (req, res, next) {
 
     if (msg) return res.status(400).send({ status: false, msg: msg });
 
+    // Return error if blog id is not valid
     let blogId = req.params.blogId;
+    if (!ObjectId.isValid(blogId)) {
+      return res.status(400).send({ status: false, msg: "Invalid Object id" });
+    }
+
     const blog = await blogModel.findById(blogId);
     if (!blog) {
       return res
@@ -146,8 +152,6 @@ const validateUpdateBlogFields = async function (req, res, next) {
 const validateDeleteBlogParam = async function (req, res, next) {
   try {
     const { blogId } = req.params;
-
-    //If blog id is incorrect
     const blog = await blogModel.findById(blogId);
     if (!blog) {
       return res
