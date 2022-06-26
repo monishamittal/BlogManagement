@@ -7,6 +7,9 @@ const ObjectId = require("mongodb").ObjectId;
 const createBlog = async function (req, res) {
   try {
     const data = req.body;
+    if (!ObjectId.isValid(data.authorId)) {
+      return res.status(400).send({ status: false, msg: "Invalid Author id" });
+    }
     // Find and check author id exists or not
     const author = await authorModel.findById(data.authorId);
     if (!author) return res.status(400).send("Author id is not valid");
@@ -26,6 +29,12 @@ const getBlogs = async function (req, res) {
     // Get a blog those aren't deleted and are published
     const params = { isPublished: true, isDeleted: false };
 
+    if (!authorId && !category && !tags && !subcategory) {
+      let blogs = await blogModel.find(params).populate("authorId");
+
+      return res.status(200).send({ status: true, data: blogs });
+    }
+
     // Set params based on query params value
     if (authorId) params.authorId = authorId;
     if (!ObjectId.isValid(authorId)) {
@@ -41,12 +50,6 @@ const getBlogs = async function (req, res) {
     if (subcategory) {
       const newSubcategory = subcategory.split(",").map((sub) => sub.trim());
       params.subcategory = { $all: newSubcategory };
-    }
-
-    if (!authorId && !category && !tags && !subcategory) {
-      let blogs = await blogModel.find(params).populate("authorId");
-
-      return res.status(200).send({ status: true, data: blogs });
     }
 
     const blogs = await blogModel.find(params);

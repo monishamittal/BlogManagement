@@ -27,10 +27,12 @@ const validateAuthorFields = async function (req, res, next) {
 
       let data = ["Mr", "Mrs", "Miss"];
       if (!title) msg = "Title is required";
+      else if (title.trim().length == 0) msg = "Missing title";
       else if (!data.includes(title))
         msg = "Invalid title , selects from 'Mr','Mrs' and 'Miss'";
 
       if (!password) msg = "Password is required";
+      else if (password.trim().length == 0) msg = "Please enter your password";
       else if (
         !/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(
           password
@@ -183,8 +185,36 @@ const validateQueryParams = async function (req, res, next) {
   next();
 };
 
+const validateLoginAuthor = async function (req, res, next) {
+  try {
+    let data = req.body;
+    if (Object.keys(data).length == 0) {
+      return res
+        .status(400)
+        .send({ status: false, msg: "Missing all fields." });
+    } else {
+      const { email, password } = req.body;
+      let msg = "";
+
+      if (!password) msg = "Password is required";
+      else if (password.trim().length == 0) msg = "Please enter your password";
+
+      if (!email) msg = "Email is required";
+      else if (email.trim().length == 0) msg = "Enter your Email";
+
+      if (msg) {
+        return res.status(400).send({ status: false, msg: msg });
+      }
+    }
+  } catch (err) {
+    return res.status(500).send({ status: false, msg: err.message });
+  }
+  next();
+};
+
 module.exports.validateAuthorFields = validateAuthorFields;
 module.exports.validateBlogFields = validateBlogFields;
 module.exports.validateUpdateBlogFields = validateUpdateBlogFields;
 module.exports.validateDeleteBlogParam = validateDeleteBlogParam;
 module.exports.validateQueryParams = validateQueryParams;
+module.exports.validateLoginAuthor = validateLoginAuthor;

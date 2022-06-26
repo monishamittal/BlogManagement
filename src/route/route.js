@@ -52,7 +52,7 @@ router.delete(
 );
 
 //.....................Handling HTTP request for login author (Post API)...................//
-router.post("/login", authorController.loginAuthor);
+router.post("/login",   validator.validateLoginAuthor, authorController.loginAuthor);
 
 //.....................Making router public...................//
 module.exports = router;
