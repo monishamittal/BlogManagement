@@ -1,14 +1,15 @@
 //.................................... Import Models for using in this module ....................//
 const authorModel = require("../models/authorModel");
 const blogModel = require("../models/blogModel");
-const ObjectId = require("mongodb").ObjectId;
+const mongoose = require("mongoose");
+const ObjectId = mongoose.Types.ObjectId;
 
 // ....................................... Creating blogs .......................................//
 const createBlog = async function (req, res) {
   try {
     const data = req.body;
     if (!ObjectId.isValid(data.authorId)) {
-      return res.status(400).send({ status: false, msg: "Invalid Author id" });
+      return res.status(400).send({ status: false, msg: "Invalid Object id" });
     }
     // Find and check author id exists or not
     const author = await authorModel.findById(data.authorId);

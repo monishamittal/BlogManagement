@@ -1,7 +1,8 @@
 //.................................... Import Model and jwt for using in this module ....................//
 const jwt = require("jsonwebtoken");
 const blogModel = require("../models/blogModel");
-const ObjectId = require("mongodb").ObjectId;
+const mongoose = require("mongoose");
+const ObjectId = mongoose.Types.ObjectId;
 
 //..................................... Authentication ......................................//
 const Authentication = async function (req, res, next) {
