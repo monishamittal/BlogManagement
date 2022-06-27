@@ -62,9 +62,7 @@ const AuthorisationForQuery = async function (req, res, next) {
 
     // Return error if author id is not valid
     let authorId = req.query.authorId;
-    if (!ObjectId.isValid(authorId)) {
-      return res.status(400).send({ status: false, msg: "Invalid Object id" });
-    }
+   
     let userLoggedIn = decodedtoken.authorId;
 
     if (authorId != userLoggedIn) {

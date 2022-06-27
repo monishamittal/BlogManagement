@@ -119,6 +119,9 @@ const deleteBlogByQuery = async function (req, res) {
     // Set params based on query params value
     const params = {};
     if (authorId) params.authorId = authorId;
+    if (!ObjectId.isValid(authorId)) {
+      return res.status(400).send({ status: false, msg: "Invalid Object id" });
+    }
     if (category) params.category = category;
 
     if (tags) {

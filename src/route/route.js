@@ -47,8 +47,8 @@ router.delete(
   "/blogs",
   validator.validateQueryParams,
   auth.Authentication,
-  auth.AuthorisationForQuery,
-  blogController.deleteBlogByQuery
+  blogController.deleteBlogByQuery,
+  auth.AuthorisationForQuery
 );
 
 //.....................Handling HTTP request for login author (Post API)...................//
