@@ -119,9 +119,6 @@ const deleteBlogByQuery = async function (req, res) {
     // Set params based on query params value
     const params = {};
     if (authorId) params.authorId = authorId;
-    if (!ObjectId.isValid(authorId)) {
-      return res.status(400).send({ status: false, msg: "Invalid Object id" });
-    }
     if (category) params.category = category;
 
     if (tags) {
@@ -142,13 +139,16 @@ const deleteBlogByQuery = async function (req, res) {
       { $set: { isDeleted: true, deletedAt: Date.now() } },
       { new: true }
     );
+
     // If there is no updatation found then this error occured.
+   
     if (blogs.modifiedCount === 0) {
       return res.status(404).send({ status: false, msg: "No blogs found" });
     }
     return res
       .status(200)
       .send({ status: true, msg: "Blogs deleted successfully" });
+   
   } catch (err) {
     return res.status(500).send({ status: false, msg: err.message });
   }
