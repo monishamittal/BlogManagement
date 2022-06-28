@@ -1,4 +1,3 @@
-
 //.................................... Import Models for using in this module ....................//
 const mongoose = require("mongoose");
 
@@ -29,10 +28,11 @@ const blogSchema = new mongoose.Schema(
         type: String,
       },
     ],
-    deletedAt: { type: Date },
+
     isDeleted: { type: Boolean, default: false },
-    publishedAt: { type: Date },
+    deletedAt: { type: Date },
     isPublished: { type: Boolean, default: false },
+    publishedAt: { type: Date },
   },
   { timestamps: true }
 );

@@ -91,7 +91,7 @@ const validateAuthorFields = async function (req, res, next) {
       if (emailInData.includes(email))
         return res
           .status(400)
-          .send({ status: false, msg: "Email id is already exist" });
+          .send({ status: false, msg: `${email} is already exist` });
     }
   } catch (err) {
     return res.status(500).send({ status: false, msg: err.message });
@@ -196,7 +196,9 @@ const validateUpdateBlogFields = async function (req, res, next) {
     // Return error if blog id is not valid
     let blogId = req.params.blogId;
     if (!ObjectId.isValid(blogId)) {
-      return res.status(400).send({ status: false, msg: "Invalid Object id" });
+      return res
+        .status(400)
+        .send({ status: false, msg: `${blogId} is not valid` });
     }
 
     const blog = await blogModel.findById(blogId);

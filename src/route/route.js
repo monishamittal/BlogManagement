@@ -47,12 +47,16 @@ router.delete(
   "/blogs",
   validator.validateQueryParams,
   auth.Authentication,
-  blogController.deleteBlogByQuery,
-  auth.AuthorisationForQuery
+  auth.AuthorisationForQuery,
+  blogController.deleteBlogByQuery
 );
 
 //.....................Handling HTTP request for login author (Post API)...................//
-router.post("/login",   validator.validateLoginAuthor, authorController.loginAuthor);
+router.post(
+  "/login",
+  validator.validateLoginAuthor,
+  authorController.loginAuthor
+);
 
 //.....................Making router public...................//
 module.exports = router;

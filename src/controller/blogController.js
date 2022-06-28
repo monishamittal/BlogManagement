@@ -15,6 +15,9 @@ const createBlog = async function (req, res) {
     const author = await authorModel.findById(data.authorId);
     if (!author) return res.status(400).send("Author id is not valid");
 
+    if (data.isPublished) data.publishedAt = Date.now();
+    if (data.isDeleted) data.deletedAt = Date.now();
+
     // create a new blog
     const blog = await blogModel.create(data);
     return res.status(201).send({ status: true, data: blog });
@@ -38,8 +41,8 @@ const getBlogs = async function (req, res) {
 
     // Set params based on query params value
     if (authorId) params.authorId = authorId;
-    if (!ObjectId.isValid(authorId)) {
-      return res.status(400).send({ status: false, msg: "Invalid Object id" });
+    if (authorId && !ObjectId.isValid(authorId)) {
+      return res.status(400).send({ status: false, msg: `${authorId} is not valid` });
     }
     if (category) params.category = category;
 
@@ -141,14 +144,13 @@ const deleteBlogByQuery = async function (req, res) {
     );
 
     // If there is no updatation found then this error occured.
-   
+
     if (blogs.modifiedCount === 0) {
       return res.status(404).send({ status: false, msg: "No blogs found" });
     }
     return res
       .status(200)
       .send({ status: true, msg: "Blogs deleted successfully" });
-   
   } catch (err) {
     return res.status(500).send({ status: false, msg: err.message });
   }

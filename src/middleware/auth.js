@@ -6,17 +6,21 @@ const ObjectId = mongoose.Types.ObjectId;
 
 //..................................... Authentication ......................................//
 const Authentication = async function (req, res, next) {
-  let token = req.headers["x-api-key"] || req.headers["x-Api-key"];
-  if (!token)
-    return res
-      .status(400)
-      .send({ status: false, msg: "Token must be present" });
   try {
-    const decodedtoken = jwt.verify(token, "FunctionUp - Project-1");
+    let token = req.headers["x-api-key"] || req.headers["x-Api-key"];
+    if (!token)
+      return res
+        .status(400)
+        .send({ status: false, msg: "Token must be present" });
+
+    jwt.verify(token, "FunctionUp - Project-1", (error, response) => {
+      if (error)
+        return res.status(401).send({ status: false, msg: "Token is invalid" });
+      next();
+    });
   } catch (err) {
     return res.status(500).send({ status: false, msg: err.message });
   }
-  next();
 };
 
 //..................................... Authorisation .......................................//
@@ -28,7 +32,9 @@ const Authorisation = async function (req, res, next) {
     // Return error if blog id is not valid
     let blogId = req.params.blogId;
     if (!ObjectId.isValid(blogId)) {
-      return res.status(400).send({ status: false, msg: "Invalid Object id" });
+      return res
+        .status(400)
+        .send({ status: false, msg: `${blogId} is not valid` });
     }
     let author = await blogModel
       .findById(blogId)
@@ -62,10 +68,15 @@ const AuthorisationForQuery = async function (req, res, next) {
 
     // Return error if author id is not valid
     let authorId = req.query.authorId;
-   
+    if (authorId && !ObjectId.isValid(authorId)) {
+      return res
+        .status(400)
+        .send({ status: false, msg: `${authorId} is not valid` });
+    }
+
     let userLoggedIn = decodedtoken.authorId;
 
-    if (authorId != userLoggedIn) {
+    if (authorId && authorId != userLoggedIn) {
       return res.status(401).send({
         status: false,
         msg: "User logged in is not allowed to modified another users data",
