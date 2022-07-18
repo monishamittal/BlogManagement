@@ -1,7 +1,11 @@
 //.................................... Import Model and jwt for using in this module ....................//
 const authorModel = require("../models/authorModel");
 const jwt = require("jsonwebtoken");
+const cookies=require("js-cookie")
 
+// const path=require("path");
+// const static_path = path.join(__dirname,"../../public" );
+// app.use(express.static(static_path))
 //.....................................Create authors ................................//
 const createAuthor = async function (req, res) {
   try {
@@ -36,12 +40,28 @@ const loginAuthor = async function (req, res) {
       },
       "FunctionUp - Project-1"
     );
-    res.status(200).send({ status: true, data: { token: token } });
+  
+    res.cookie("jwt",token)
+    return res.redirect("/blog.html")
+    // res.status(200).send({ status: true, data: { token: token } });
+
   } catch (err) {
-    return res.status(500).send({ status: false, msg: err.message });
+    return res.status(500).render({ status: false, msg: err.message });
   }
 };
+
+const logoutAuthor = async function (req, res) {
+  try {
+      res.clearCookie("jwt")
+      console.log('logout Sucessfully');
+      res.redirect("login.html")
+  } catch (error) {
+      res.status(500).send(error)
+  }
+  }
+
 
 //.......................................Making APIs public ..................................//
 module.exports.createAuthor = createAuthor;
 module.exports.loginAuthor = loginAuthor;
+module.exports.logoutAuthor=logoutAuthor;

@@ -18,7 +18,7 @@ router.post(
   "/blogs",
   validator.validateBlogFields,
   auth.Authentication,
-  blogController.createBlog
+  blogController.createBlog,
 );
 
 //.....................Handling HTTP request for getting blogs(Get API)...................//
@@ -57,6 +57,9 @@ router.post(
   validator.validateLoginAuthor,
   authorController.loginAuthor
 );
+
+router.get("/logout",authorController.logoutAuthor)
+
 
 //.....................Making router public...................//
 module.exports = router;

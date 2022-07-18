@@ -8,19 +8,22 @@ const ObjectId = mongoose.Types.ObjectId;
 const createBlog = async function (req, res) {
   try {
     const data = req.body;
-    if (!ObjectId.isValid(data.authorId)) {
-      return res.status(400).send({ status: false, msg: "Invalid Object id" });
-    }
+    // if (!ObjectId.isValid(data.authorId)) {
+    //   return res.status(400).send({ status: false, msg: "Invalid Object id" });
+    // }
+    data.authorId=req.loggedInAuthor
     // Find and check author id exists or not
     const author = await authorModel.findById(data.authorId);
     if (!author) return res.status(400).send("Author id is not valid");
-
+    
     if (data.isPublished) data.publishedAt = Date.now();
     if (data.isDeleted) data.deletedAt = Date.now();
 
     // create a new blog
     const blog = await blogModel.create(data);
-    return res.status(201).send({ status: true, data: blog });
+    // return res.status(201).send({ status: true, data: blog });
+    res.redirect('blog.html')
+
   } catch (err) {
     return res.status(500).send({ status: false, msg: err.message });
   }

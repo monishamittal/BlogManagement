@@ -125,14 +125,15 @@ const validateBlogFields = async function (req, res, next) {
           .status(400)
           .send({ status: false, msg: "Body is empty. Please enter" });
 
-      if (!authorId)
-        return res
-          .status(400)
-          .send({ status: false, msg: "Author id is required" });
-      else if (authorId.trim().length == 0)
-        return res
-          .status(400)
-          .send({ status: false, msg: "Author id is empty. Please enter" });
+      
+      // if (!authorId)
+      //   return res
+      //     .status(400)
+      //     .send({ status: false, msg: "Author id is required" });
+      // else if (authorId.trim().length == 0)
+      //   return res
+      //     .status(400)
+      //     .send({ status: false, msg: "Author id is empty. Please enter" });
 
       if (!tags)
         return res
@@ -285,3 +286,6 @@ module.exports.validateUpdateBlogFields = validateUpdateBlogFields;
 module.exports.validateDeleteBlogParam = validateDeleteBlogParam;
 module.exports.validateQueryParams = validateQueryParams;
 module.exports.validateLoginAuthor = validateLoginAuthor;
+
+
+

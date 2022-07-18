@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;200;300;400;500;600;700&family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet">
+   
 </head>
 <body>
 
@@ -21,20 +22,20 @@
     </div>
     <nav class="topCenter">
        <ul class="topList">
-       <li class="topListItem">
+       <!-- <li class="topListItem">
         <a href="index.html">HOME</a>
-       </li>
-       <li class="topListItem">
+       </li> -->
+       <!-- <li class="topListItem">
         <a href="register.html">REGISTER</a>
-       </li>
-       <li class="topListItem">
+       </li> -->
+       <!-- <li class="topListItem">
         <a href="login.html">LOGIN</a>
-       </li>
-       <li class="topListItem">
+       </li> -->
+       <!-- <li class="topListItem">
         <a href="blog.html">BLOG</a>
-        </li>
+        </li> -->
        <li class="topListItem">
-        <a href="index.html">LOGOUT</a>
+        <a href="/logout">LOGOUT</a>
        </li>
     </ul>
     </nav>
@@ -44,6 +45,11 @@
     </div>
 </div>
     <!------------------------------------------ header ----------------------------------------------->
+    <div class="alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    successully created!
+    </div>
+
     <div class="body">
         <div class="container">
             <div class="title">Blog Creation</div>
@@ -58,10 +64,10 @@
                     <span class="details">Body</span>
                     <input type="text" placeholder="Enter Body" required name="body">
                   </div>
-                  <div class="input-box">
+                  <!-- <div class="input-box">
                     <span class="details">Author Id</span>
-                    <input type="text" placeholder="Enter Author Id" required name="authorId">
-                  </div>
+                    <input type="text" placeholder="Enter Author Id"  name="authorId">
+                  </div> -->
                   <div class="input-box">
                     <span class="details">Tags</span>
                     <input type="text" placeholder="Enter Tags" required name="tags">
@@ -85,6 +91,7 @@
             </div>
           </div>
         </div>
+
         <!--------------------------------------------------------------- update  ---------------------------------->
         <div class="body">
             <div class="container">

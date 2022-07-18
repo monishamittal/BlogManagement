@@ -3,21 +3,22 @@ const jwt = require("jsonwebtoken");
 const blogModel = require("../models/blogModel");
 const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
-
+const cookies=require("js-cookie")
 //..................................... Authentication ......................................//
 const Authentication = async function (req, res, next) {
   try {
-    let token = req.headers["x-api-key"] || req.headers["x-Api-key"];
+ 
+    // let token = req.headers["x-api-key"] || req.headers["x-Api-key"];
+    let token =req.cookies.jwt
+    console.log(req.cookies.jwt)
     if (!token)
       return res
         .status(400)
         .send({ status: false, msg: "Token must be present" });
 
-    jwt.verify(token, "FunctionUp - Project-1", (error, response) => {
-      if (error)
-        return res.status(401).send({ status: false, msg: "Token is invalid" });
+    let decodedToken=jwt.verify(token, "FunctionUp - Project-1") 
+      req.loggedInAuthor=decodedToken.authorId
       next();
-    });
   } catch (err) {
     return res.status(500).send({ status: false, msg: err.message });
   }
