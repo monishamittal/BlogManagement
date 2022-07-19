@@ -17,6 +17,18 @@ const createAuthor = async function (req, res) {
   }
 };
 
+
+//.....................................get authors ................................//
+const getAuthor = async function (req, res) {
+  try {
+    let authorId=req.loggedInAuthor
+    const authorlogin = await authorModel .find({_id:authorId});
+    res.status(201).send({ status: true, data: authorlogin });
+  } catch (err) {
+    return res.status(500).send({ status: false, msg: err.message });
+  }
+};
+
 //...............................Login author ..............................//
 
 const loginAuthor = async function (req, res) {
@@ -42,7 +54,7 @@ const loginAuthor = async function (req, res) {
     );
   
     res.cookie("jwt",token)
-    return res.redirect("/blog.html")
+    return res.redirect("/blog")
     // res.status(200).send({ status: true, data: { token: token } });
 
   } catch (err) {
@@ -54,7 +66,7 @@ const logoutAuthor = async function (req, res) {
   try {
       res.clearCookie("jwt")
       console.log('logout Sucessfully');
-      res.redirect("login.html")
+      res.redirect("/login")
   } catch (error) {
       res.status(500).send(error)
   }
@@ -65,3 +77,4 @@ const logoutAuthor = async function (req, res) {
 module.exports.createAuthor = createAuthor;
 module.exports.loginAuthor = loginAuthor;
 module.exports.logoutAuthor=logoutAuthor;
+module.exports.getAuthor=getAuthor

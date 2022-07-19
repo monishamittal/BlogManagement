@@ -21,8 +21,8 @@ const createBlog = async function (req, res) {
 
     // create a new blog
     const blog = await blogModel.create(data);
-    // return res.status(201).send({ status: true, data: blog });
-    res.redirect('blog.html')
+    return res.status(201).send({ status: true, data: blog });
+    // res.redirect('/blog')
 
   } catch (err) {
     return res.status(500).send({ status: false, msg: err.message });

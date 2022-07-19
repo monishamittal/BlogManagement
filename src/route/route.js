@@ -13,6 +13,10 @@ router.post(
   authorController.createAuthor
 );
 
+//.....................Handling HTTP request for getting author data(Get API)...................//
+router.get("/getAuthorData", auth.Authentication, authorController.getAuthor);
+
+
 //.....................Handling HTTP request for creating blogs(Post API)...................//
 router.post(
   "/blogs",
@@ -58,7 +62,7 @@ router.post(
   authorController.loginAuthor
 );
 
-router.get("/logout",authorController.logoutAuthor)
+router.get("/logout", authorController.logoutAuthor)
 
 
 //.....................Making router public...................//

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;200;300;400;500;600;700&family=Lora:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    {{!-- <script src="script.js"></script> --}}
+</head>
+
+<body>
+
+    <!----------------------------------- top --------------------------->
+    <div class="top">
+        <div class="topLeft"><br>
+            <i class="topIcon fa-brands fa-facebook-square"></i>
+            <i class="topIcon fa-brands fa-twitter-square"></i>
+            <i class="topIcon fa-brands fa-pinterest-square"></i>
+            <i class="topIcon fa-brands fa-instagram-square"></i>
+        </div>
+        <nav class="topCenter">
+            <ul class="topList">
+                <li class="topListItem">
+                    <a href="/blog">HOME</a>
+                </li>
+                <li class="topListItem">
+                    <a href="/allblogs">BLOGS</a>
+                </li>
+                <li class="topListItem">
+                    <a href="/update">UPDATE</a>
+                </li>
+                <li class="topListItem">
+                    <a href="/delete">DELETE</a>
+                </li>
+                {{!-- <li class="topListItem">
+                    <a href="/logout">LOGOUT</a>
+                </li> --}}
+            </ul>
+        </nav>
+        {{!-- <div class="topRight">
+            <img class="topImg"
+                src="https://healthcare.ascension.org/-/media/healthcare/national/service-lines/hero/womens-health.jpg?h=800&iar=0&w=1200&hash=02B0A60381821943B91CAF9FF6639035"
+                alt="" />
+            <i class="topSearchIcon fa-solid fa-magnifying-glass"></i>
+        </div> --}}
+        <div class="dropdown topright">
+            <button class="dropbtn">USER</button>
+            <div class="dropdown-content">
+                <a href="#">setting</a>
+                <a href="/profile">view profile</a>
+                <a href="/logout">logout</a>
+            </div>
+        </div>
+    </div>
+    <!------------------------------------------ header ----------------------------------------------->
+
+
+    <div class="body">
+        <div class="container">
+            <div class="title">Profile Details</div>
+            <div class="content">
+   
+                <div class="limiter">
+                    <div class="container-login100">
+                        <div class="wrap-login100">
+
+                            {{!-- form --}}
+
+
+                           <form class="login100-form validate-form">
+                       
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                            
+                                           <th>Id (AuthorId)</th>
+                                            <th>First Name</th>
+                                            <th>last Name</th>
+                                            <th>Email</th>
+                                            <th>Password</th>
+                                    
+                                        </tr>
+                                    </thead>
+                                    <tbody id="table_data">
+
+                                    </tbody>
+                                </table>
+                            </form>
+
+                            {{!-- form --}}
+
+                        </div>
+                    </div>
+                </div>
+
+<script>
+     fetch("/getAuthorData").then((data)=>{
+        // console.log(data)
+        return data.json(); //converted to object
+        })
+
+        .then((objectData)=>{
+            console.log(objectData)
+            let Data =objectData.data
+            let tableData=""; 
+            Data.map((values)=>{
+                tableData+=
+            `<tr>
+            
+         <td>${values._id}</td>
+            <td>${values.fname}</td>
+            <td>${values.lname}</td>
+            <td>${values.email}</td> 
+            <td>${values.password}</td>
+            
+
+            </tr> `;        
+            })
+
+            document.getElementById("table_data")
+            .innerHTML=tableData;
+        })
+</script>
+
+</body>
+
+</html>

@@ -10,7 +10,7 @@ const Authentication = async function (req, res, next) {
  
     // let token = req.headers["x-api-key"] || req.headers["x-Api-key"];
     let token =req.cookies.jwt
-    console.log(req.cookies.jwt)
+    // console.log(req.cookies.jwt)
     if (!token)
       return res
         .status(400)

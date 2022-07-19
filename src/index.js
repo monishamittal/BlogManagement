@@ -7,7 +7,6 @@ const route = require("./route/route"); // Import route module
 const app = express();
 const path=require("path");
 const cookieParser = require('cookie-parser')
-app.use(cookieParser())
 app.use(bodyParser.json()); // data will be converted to JSON format , returns middleware that only parses json.
 app.use(bodyParser.urlencoded({ extended:false})); // req.body object will contain values of any type instead of just strings.
 app.use(cookieParser())
@@ -15,6 +14,46 @@ app.use(cookieParser())
 
 const static_path = path.join(__dirname,"../public");
 app.use(express.static(static_path))
+
+
+
+//to set view engine
+app.set("view engine","hbs")
+
+
+//template engine route
+app.get("/",(req,res)=>{
+  res.render('index',{title:"Home Page"})
+})
+
+app.get("/register",(req,res)=>{
+  res.render('register',{title:"Registration"})
+})
+
+app.get("/login",(req,res)=>{
+  res.render('login',{title:"Login"})
+})
+
+
+app.get("/blog",(req,res)=>{
+  res.render('blog',{title:"Dashboard"})
+})
+
+app.get("/allblogs",(req,res)=>{
+  res.render('allblogs',{title:"Blogs"})
+})
+
+app.get("/update",(req,res)=>{
+  res.render('update',{title:"Update Blog"})
+})
+
+app.get("/delete",(req,res)=>{
+  res.render('delete',{title:"Delete Blog"})
+})
+
+app.get("/profile",(req,res)=>{
+  res.render('viewProfile',{title:"Delete Blog"})
+})
 
 
 
