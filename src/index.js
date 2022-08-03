@@ -54,9 +54,7 @@ app.get("/delete",(req,res)=>{
 app.get("/profile",(req,res)=>{
   res.render('viewProfile',{title:"Delete Blog"})
 })
-
-
-
+ 
 const mongooseURL =
   "mongodb+srv://functionup-radon:radon123@cluster0.q0p7q73.mongodb.net/project1-DB?retryWrites=true&w=majority";
 

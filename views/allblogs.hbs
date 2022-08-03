@@ -58,12 +58,12 @@
     {{message}}
     </div> --}}
 
-    <div class="body">
-        <div class="container">
-            <div class="title">Get Blog</div>
-            <div class="content">
-              <form action="/blogs" method="get">
-                <div class="user-details">
+   <div class="body">
+         <div class="container">
+           <div class="title">Get Blog</div>
+            {{!--  <div class="content"> --}}
+              {{!-- <form action="/blogs" method="get"> --}}
+                {{!-- <div class="user-details"> --}}
                   {{!-- <div class="input-box">
                     <span class="details">Title</span>
                     <input type="text" placeholder="Enter Title" required name="title">
@@ -72,7 +72,7 @@
                     <span class="details">Body</span>
                     <input type="text" placeholder="Enter Body" required name="body">
                   </div> --}}
-                  <div class="input-box">
+                  {{!-- <div class="input-box">
                     <span class="details">Author Id</span>
                     <input type="text" placeholder="Enter Author Id"  name="authorId">
                   </div>
@@ -88,15 +88,15 @@
                     <span class="details">Sub Category</span>
                     <input type="text" placeholder="Enter Sub Category"  name="subcategory">
                   </div>
-                </div>
-                <div class="button">
+                </div> --}}
+                {{!-- <div class="button">
                   <input type="submit" value="GET">
-                </div>
+                </div> --}}
 
-              </form>
-                 <div class="limiter">
+              {{!-- </form> --}}
+                 {{!-- <div class="limiter">
         <div class="container-login100">
-            <div class="wrap-login100">
+            <div class="wrap-login100"> --}}
 
     {{!-- <div class="container-login100-form-btn">
       <button class="login100-form-btn" onclick="getData()">
@@ -113,13 +113,13 @@
 <table class="table">
     <thead>
       <tr>
-        {{!-- <th>ID</th> --}}
+        <th>ID</th>
         <th>Title</th>
         <th>Body</th>
-        {{!-- <th>authorId</th> --}}
-        {{!-- <th>tags</th> --}}
-        {{!-- <th>category</th> --}}
-        {{!-- <th>subcategory</th> --}}
+        {{!-- <th>authorId</th>  --}}
+        <th>Tags</th>
+        <th>Category</th>
+       <th>Subcategory</th>
       </tr>
     </thead>
     <tbody id="table_data">
@@ -129,7 +129,7 @@
   </form>
 
             </div>
-          </div>
+          </div> 
         </div>
 
 <script>
@@ -145,9 +145,13 @@
             Data.map((values)=>{
                 tableData+=
             `<tr>
-            
+            <td>${values._id}</td>
             <td>${values.title}</td>
             <td>${values.body}</td>
+            {{!-- <td>${values.authorId}</td> --}}
+            <td>${values.tags}</td>
+            <td>${values.category}</td>
+            <td>${values.subcategory}</td>
             
 
             </tr> `;        

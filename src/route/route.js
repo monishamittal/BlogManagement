@@ -29,7 +29,14 @@ router.post(
 router.get("/blogs", auth.Authentication, blogController.getBlogs);
 
 //.....................Handling HTTP request for updating blogs(Put API)...................//
-router.put(
+// router.put(
+//   "/blogs/:blogId",
+//   validator.validateUpdateBlogFields,
+//   auth.Authentication,
+//   auth.Authorisation,
+//   blogController.updateBlog
+// );
+router.get(
   "/blogs/:blogId",
   validator.validateUpdateBlogFields,
   auth.Authentication,
@@ -54,6 +61,7 @@ router.delete(
   auth.AuthorisationForQuery,
   blogController.deleteBlogByQuery
 );
+
 
 //.....................Handling HTTP request for login author (Post API)...................//
 router.post(

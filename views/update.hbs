@@ -64,7 +64,7 @@
             <div class="container">
                 <div class="title">Blog Update</div>
                 <div class="content">
-                  <form action="/blogs/:blogId" method="PUT">
+                  <form action="/blogs/{{blog._id}}" method="get">
                     <div class="user-details">
                       <div class="input-box">
                         <span class="details">Title</span>
@@ -84,14 +84,65 @@
                       </div>
                     </div>
                     <div class="button">
-                      <input type="submit" value="Update">
+                      <input type="submit" value="Save">
                     </div>
                   </form>
-                </div>
-              </div>
+
+               <form  class="login100-form validate-form">
+<table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Body</th>
+        {{!-- <th>authorId</th>  --}}
+        <th>Tags</th>
+        <th>Category</th>
+       <th>Subcategory</th>
+       <th>Edit</th>
+      </tr>
+    </thead>
+    <tbody id="table_data">
+
+    </tbody>
+  </table>
+  </form>
+
             </div>
+          </div> 
+        </div>
+
+<script>
+
+ fetch("/blogs").then((data)=>{
+        return data.json(); //converted to object
+        })
+
+        .then((objectData)=>{
+            console.log(objectData.data[0])
+            let Data =objectData.data
+            let tableData=""; 
+            Data.map((values)=>{
+                tableData+=
+            `<tr>
+            <td>${values._id}</td>
+            <td>${values.title}</td>
+            <td>${values.body}</td>
+            {{!-- <td>${values.authorId}</td> --}}
+            <td>${values.tags}</td>
+            <td>${values.category}</td>
+            <td>${values.subcategory}</td>
+            <td><a href="/blogs/{{blog._id}}"<i class="fa fa-edit" style="font-size:18px;color:green"></i><td>
+            </tr> `;        
+            })
+
+            document.getElementById("table_data")
+            .innerHTML=tableData;
+        })
+
+
+</script>
 
 
 </body>
 </html>
-

@@ -13,7 +13,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;200;300;400;500;600;700&family=Lora:wght@400;500;600;700&display=swap"
     rel="stylesheet">
-
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
 
 <body>
@@ -75,7 +75,7 @@
     <div class="container">
       <div class="title">Delete Blog</div>
       <div class="content">
-        <form action="/blogs" method="POST">
+        <form action="/blogs/{{blog._id}}" method="GET">
           <div class="user-details">
             {{!-- <div class="input-box">
               <span class="details">Title</span>
@@ -85,11 +85,11 @@
               <span class="details">Body</span>
               <input type="text" placeholder="Enter Body" required name="body">
             </div> --}}
-             <div class="input-box">
+             {{!-- <div class="input-box">
                     <span class="details">Author Id</span>
                     <input type="text" placeholder="Enter Author Id"  name="authorId">
-                  </div> 
-            <div class="input-box">
+                  </div>  --}}
+            {{!-- <div class="input-box">
               <span class="details">Tags</span>
               <input type="text" placeholder="Enter Tags" required name="tags">
             </div>
@@ -104,18 +104,83 @@
           </div>
           <div class="button">
             <input type="submit" value="Delete">
-          </div>
+          </div> --}}
           <!-- <div class="button">
                     <input type="submit" value="Delete">
                 </div> -->
-        </form>
-      </div>
-    </div>
-  </div>
+          {{!-- </form> --}}
+                 {{!-- <div class="limiter">
+        <div class="container-login100">
+            <div class="wrap-login100"> --}}
 
+    {{!-- <div class="container-login100-form-btn">
+      <button class="login100-form-btn" onclick="getData()">
+        All Blogs
+      </button>
+    </div> --}}
+      {{!-- <a class="right" onclick="getData()">
+        Get Data
+        <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
+    </a> --}}
+    
+
+ <form  class="login100-form validate-form">
+<table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Body</th>
+        {{!-- <th>authorId</th>  --}}
+        <th>Tags</th>
+        <th>Category</th>
+       <th>Subcategory</th>
+       <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody id="table_data">
+
+    </tbody>
+  </table>
+  </form>
+
+            </div>
+          </div> 
+        </div>
+
+<script>
+
+ fetch("/blogs").then((data)=>{
+        return data.json(); //converted to object
+        })
+
+        .then((objectData)=>{
+            console.log(objectData.data[0])
+            let Data =objectData.data
+            let tableData=""; 
+            Data.map((values)=>{
+                tableData+=
+            `<tr>
+            <td>${values._id}</td>
+            <td>${values.title}</td>
+            <td>${values.body}</td>
+            {{!-- <td>${values.authorId}</td> --}}
+            <td>${values.tags}</td>
+            <td>${values.category}</td>
+            <td>${values.subcategory}</td>
+             <td><i class="material-icons"  style="font-size:18px;color:red">delete</i><td>
+            </tr> `;        
+            })
+
+            document.getElementById("table_data")
+            .innerHTML=tableData;
+        })
+
+
+</script>
 
 
 
 </body>
-
 </html>
+

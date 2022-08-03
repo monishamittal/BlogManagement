@@ -21,7 +21,8 @@ const createBlog = async function (req, res) {
 
     // create a new blog
     const blog = await blogModel.create(data);
-    return res.status(201).send({ status: true, data: blog });
+      // res.render('blog',{ success:"Succefully Created"});
+    return res.status(201).send({ status: true, data: blog});
     // res.redirect('/blog')
 
   } catch (err) {
@@ -76,7 +77,7 @@ const getBlogs = async function (req, res) {
 const updateBlog = async function (req, res) {
   try {
     const blogId = req.params.blogId;
-
+console.log(req.params.blogId)
     const { title, body, tags, subcategory } = req.body;
 
     //Updates a blog by changing the its title, body, adding tags, adding a subcategory and also by changing isPublished true with date.
